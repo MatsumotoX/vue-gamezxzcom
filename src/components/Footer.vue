@@ -26,15 +26,20 @@
             <div class="title">
               Client
             </div>
-            <ul class="menu">
+            <ul v-if="this.$store.state.authUser" class="menu">
               <li>
-                <router-link to="/login">Login</router-link>
+                <router-link to="/dashboard">Dashboard</router-link>
+              </li>
+              <li>
+                <a href="" v-on:click="signOut">Sign Out</a>
+              </li>
+            </ul>
+            <ul v-else class="menu">
+              <li>
+                <router-link to="/sign-in">Sign In</router-link>
               </li>
               <li>
                 <router-link to="/sign-up">Sign Up</router-link>
-              </li>
-              <li>
-                <a href="" v-on:click="logout">Logout</a>
               </li>
               <li>
                 <router-link to="/resetpassword">Forgot Password</router-link>
@@ -86,18 +91,13 @@ import "firebase/auth";
 import "firebase/database";
 
 export default {
-  name: "hello",
+  name: "Footer",
   data() {
     return {};
   },
   methods: {
-    logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.replace("home");
-        });
+    signOut() {
+      firebase.auth().signOut();
     }
   }
 };

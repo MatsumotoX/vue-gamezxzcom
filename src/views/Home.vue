@@ -63,8 +63,6 @@
 <script>
 import Vue from "vue";
 import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
 
 export default {
   name: "home",
@@ -166,6 +164,7 @@ export default {
               Vue.set(this.authUser, "favoriteFood", this.favoriteFood);
             }
           });
+        this.$store.state.authUser = user;
       }
     });
   }
