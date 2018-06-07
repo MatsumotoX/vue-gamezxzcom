@@ -1,42 +1,47 @@
 <template>
   <div>
-    <div class="container-center animated slideInDown">
-      <div v-if="this.$store.state.authUser">
-      </div>
-      <div v-else>
-        <div class="view-header">
-          <div class="header-icon">
-            <i class="pe page-header-icon pe-7s-add-user"></i>
-          </div>
-          <div class="header-title">
-            <h3>Sign Up</h3>
-            <small>
-              Please enter your data to register.
-            </small>
-          </div>
+    <div v-if="this.$store.state.authUser">
+      {{ this.$router.push('dashboard') }}
+    </div>
+    <div v-else>
+      <div class="container-center animated slideInDown">
+        <div v-if="this.$store.state.authUser">
         </div>
+        <div v-else>
+          <div class="view-header">
+            <div class="header-icon">
+              <i class="pe page-header-icon pe-7s-add-user"></i>
+            </div>
+            <div class="header-title">
+              <h3>Sign Up</h3>
+              <small>
+                Please enter your data to register.
+              </small>
+            </div>
+          </div>
 
-        <div class="panel panel-filled">
-          <div class="panel-body">
-            <form @submit.prevent="register">
-              <div class="row">
-                <div class="form-group col-lg-12">
-                  <label>Email Address</label>
-                  <input type="email" v-model="email" class="form-control" placeholder="Your address email to contact">
+          <div class="panel panel-filled">
+            <div class="panel-body">
+              <form @submit.prevent="register">
+                <div class="row">
+                  <div class="form-group col-lg-12">
+                    <label>Email Address</label>
+                    <input type="email" v-model="email" class="form-control" placeholder="Your address email to contact">
+                  </div>
+                  <div class="form-group col-lg-12">
+                    <label>Password</label>
+                    <input type="password" v-model="password" class="form-control" placeholder="Pick your hard to guess password">
+                  </div>
                 </div>
-                <div class="form-group col-lg-12">
-                  <label>Password</label>
-                  <input type="password" v-model="password" class="form-control" placeholder="Pick your hard to guess password">
-                </div>
-              </div>
 
-              <button class="btn btn-accent">Register</button>
-              or
-              <a class="btn btn-accent" @click="signInWithGoogle">Sign Up With Google
-                <i class="fa fa-google"></i>
-              </a>
+                <button class="btn btn-accent">Register</button>
+                or
+                <a class="btn btn-accent" @click="signInWithGoogle">Sign Up With Google
+                  <i class="fa fa-google"></i>
+                </a>
 
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

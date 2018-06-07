@@ -23,10 +23,7 @@ let router = new Router({
     {
       path: "/about",
       name: "about",
-      component: About,
-      meta: {
-        requiresAuth: true
-      }
+      component: About
     },
     {
       path: "/sign-in",

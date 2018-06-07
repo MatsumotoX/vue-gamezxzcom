@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.$store.state.authUser">
-
+    {{ this.$router.push('dashboard')  }}
   </div>
   <div v-else>
     <div class="container-center animated slideInDown">
@@ -60,6 +60,7 @@ export default {
     return {
       email: "",
       password: "",
+      factor: "",
       authUser: null
     };
   },
