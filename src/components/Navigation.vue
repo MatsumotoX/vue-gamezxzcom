@@ -49,7 +49,7 @@
           <li class="nav-status">
             <span class="c-white">Server Status</span>
             <p>
-              Server Date: 2018-06-02<br> Server Time: 07:14:28 UTC
+              Server Date: 2018-06-02<br> Server Time: {{hours}}:{{minutes}}:{{seconds}} UTC
             </p>
             <p>
               Users online: 128 </p>
@@ -74,11 +74,28 @@ import "firebase/database";
 export default {
   name: "Footer",
   data() {
-    return {};
+    return {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  },
+  mounted () {
+    this.$options.interval = setInterval(this.updateDateTime, 1000);
+  },
+  beforeDestroy () {
+    clearInterval(this.$options.interval);
   },
   methods: {
     signOut() {
       firebase.auth().signOut();
+    },
+    updateDateTime () {
+      let now = new Date()
+      this.hours = now.getHours()
+      this.minutes = (parseInt(now.getMinutes(), 10) >= 10 ? '' : '0') + now.getMinutes()
+      this.seconds = (parseInt(now.getSeconds(), 10) >= 10 ? '' : '0') + now.getSeconds()
+      this.hours = this.hours % 12 || 12
     }
   }
 };

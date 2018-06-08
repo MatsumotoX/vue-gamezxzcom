@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-md-4 col-xs-6">
             <div class="title">
-              ASICMINER
+              Gamezxz
             </div>
             <ul class="menu">
               <li>
@@ -68,7 +68,7 @@
         </div>
         <div class="bottom">
           <ul>
-            <li>2017 © ASICMINER Inc.</li>
+            <li>2018 © Gamezxz</li>
             <li>
               <a href="/privacy" rel="nofollow" title="Privacy Policy">Privacy Policy</a>
             </li>
@@ -76,7 +76,7 @@
               <a href="/terms" rel="nofollow" title="Terms and Conditions">Terms and Conditions</a>
             </li>
             <li>
-              <a href="mailto:info@asicminer.io" rel="nofollow" title="Contact">Contact</a>
+              <a href="mailto:gamezxz@gmail.com" rel="nofollow" title="Contact">Contact</a>
             </li>
           </ul>
         </div>

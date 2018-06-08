@@ -12,7 +12,7 @@
             </div>
           </div>
           <a class="navbar-brand" href="/">
-            ASICMINER
+            Gamezxz
             <span>v.1.0</span>
           </a>
         </div>
@@ -22,11 +22,11 @@
               <i class="stroke-hamburgermenu"></i>
             </a>
           </div>
-          <ul class="nav navbar-nav navbar-right">
+          <ul v-if="this.$store.state.authUser" class="nav navbar-nav navbar-right">
             <li class=" profil-link">
               <a href="#">
-                <span class="profile-address"></span>
-                <img src="images/profile.jpg" class="img-circle" alt="">
+                <span class="profile-address">{{this.$store.state.authUser.displayName}}</span>
+                <img :src="this.$store.state.authUser.photoURL" class="img-circle" alt="">
               </a>
             </li>
           </ul>
@@ -36,6 +36,3 @@
     <!-- End header-->
   </div>
 </template>
-
-<script>
-</script>
