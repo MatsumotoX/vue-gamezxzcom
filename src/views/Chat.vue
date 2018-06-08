@@ -1,26 +1,19 @@
 <template>
-  <div id="chat" class="container">
-    <h1>Vue School Chat Room</h1>
+  <div id="chat">
+    <h1>Chat Room</h1>
     <!-- Messages -->
-    <div v-for="message in messages" class="card">
-      <div class="card-body">
-        <!-- nickname -->
-        <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
-        <!-- content -->
-        <p v-if="message !== editingMessage" class="card-text">{{ message.text }}</p>
-        <textarea v-else v-model="messageText" class="form-control"></textarea>
-        <!-- actions -->
-        <div v-if="message !== editingMessage">
-          <a @click.prevent="deleteMessage(message)" href="#" class="card-link">delete</a>
-          <a @click.prevent="editMessage(message)" href="#" class="card-link">edit</a>
-        </div>
-        <div v-else>
-          <a @click.prevent="cancelEditing" href="#" class="card-link">cancel</a>
-          <a @click.prevent="updateMessage" href="#" class="card-link">update</a>
+    <div class="chat-body">
+      <div v-for="message in messages.slice(messages.length-20)" :key="message.id" class="card">
+        <div class="card-body">
+          <!-- nickname -->
+          <p>
+            <b class="c-white"> {{ message.nickname }}:</b> {{ message.text }}
+            <span class="pull-right">{{ timestampToDate(message.time) }}</span>
+          </p>
+
         </div>
       </div>
     </div>
-
     <hr>
     <!-- New Message -->
     <form v-if="!editingMessage" @submit.prevent="storeMessage">
@@ -64,31 +57,26 @@ export default {
     return {
       messages: [],
       messageText: "",
-      nickname: "hootlex",
+      nickname: "anonymous" + Math.floor(Math.random() * 1000),
+      time: "",
       editingMessage: null
     };
   },
   methods: {
     storeMessage() {
-      messagesRef.push({ text: this.messageText, nickname: this.nickname });
+      messagesRef.push({
+        text: this.messageText,
+        nickname: this.nickname,
+        time: Date.now().toString()
+      });
       this.messageText = "";
     },
-    deleteMessage(message) {
-      messagesRef.child(message.id).remove();
-    },
-    editMessage(message) {
-      this.editingMessage = message;
-      this.messageText = message.text;
-    },
-    cancelEditing() {
-      this.editingMessage = null;
-      this.messageText = "";
-    },
-    updateMessage() {
-      messagesRef
-        .child(this.editingMessage.id)
-        .update({ text: this.messageText });
-      this.cancelEditing();
+    timestampToDate(UNIX_timestamp) {
+      var a = new Date(UNIX_timestamp * 1);
+      var hour = a.getHours() < 10 ? "0" + a.getHours() : a.getHours();
+      var min = a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes();
+      var time = hour + ":" + min;
+      return time;
     }
   },
   created() {
@@ -98,32 +86,9 @@ export default {
       if (snapshot.val().nickname !== this.nickname) {
         nativeToast({
           message: `New message by ${snapshot.val().nickname}`,
+          position: "top",
+          timeout: 3000,
           type: "success"
-        });
-      }
-    });
-    messagesRef.on("child_removed", snapshot => {
-      const deletedMessage = this.messages.find(
-        message => message.id === snapshot.key
-      );
-      const index = this.messages.indexOf(deletedMessage);
-      this.messages.splice(index, 1);
-      if (snapshot.val().nickname !== this.nickname) {
-        nativeToast({
-          message: `Message deleted by ${snapshot.val().nickname}`,
-          type: "warning"
-        });
-      }
-    });
-    messagesRef.on("child_changed", snapshot => {
-      const updatedMessage = this.messages.find(
-        message => message.id === snapshot.key
-      );
-      updatedMessage.text = snapshot.val().text;
-      if (snapshot.val().nickname !== this.nickname) {
-        nativeToast({
-          message: `Message edited by ${snapshot.val().nickname}`,
-          type: "info"
         });
       }
     });

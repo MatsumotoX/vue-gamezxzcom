@@ -18,7 +18,7 @@
                 <router-link to="/about">About</router-link>
               </li>
               <li>
-                <router-link to="/support">Support</router-link>
+                <router-link to="/chat">Chat Room</router-link>
               </li>
             </ul>
           </div>
