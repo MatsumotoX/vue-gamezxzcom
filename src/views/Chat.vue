@@ -7,7 +7,10 @@
         <div class="card-body">
           <!-- nickname -->
           <p>
-            <b class="c-white"> {{ message.nickname }}:</b> {{ message.text }}
+            <b class="c-white">
+              <span v-if="message.member">
+                <i class="fa fa-user-circle-o text-warning"></i>
+              </span> {{ message.nickname }}:</b> {{ message.text }}
             <span class="pull-right">{{ timestampToDate(message.time) }}</span>
           </p>
 
@@ -16,7 +19,7 @@
     </div>
     <hr>
     <!-- New Message -->
-    <form v-if="!editingMessage" @submit.prevent="storeMessage">
+    <form @submit.prevent="storeMessage">
       <div class="form-group">
         <label>Message:</label>
         <textarea v-model="messageText" class="form-control"></textarea>
@@ -57,8 +60,9 @@ export default {
     return {
       messages: [],
       messageText: "",
-      nickname: "anonymous" + Math.floor(Math.random() * 1000),
+      nickname: "",
       time: "",
+      member: false,
       editingMessage: null
     };
   },
@@ -67,7 +71,8 @@ export default {
       messagesRef.push({
         text: this.messageText,
         nickname: this.nickname,
-        time: Date.now().toString()
+        time: Date.now().toString(),
+        member: this.$store.state.authUser ? true : false
       });
       this.messageText = "";
     },
@@ -83,6 +88,9 @@ export default {
     // value = snapshot.val() | key = snapshot.key
     messagesRef.on("child_added", snapshot => {
       this.messages.push({ ...snapshot.val(), id: snapshot.key });
+      this.nickname = this.$store.state.authUser
+        ? this.$store.state.authUser.displayName
+        : "anonymous" + Math.floor(Math.random() * 1000);
       if (snapshot.val().nickname !== this.nickname) {
         nativeToast({
           message: `New message by ${snapshot.val().nickname}`,
