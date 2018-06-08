@@ -77,25 +77,27 @@ export default {
     return {
       hours: 0,
       minutes: 0,
-      seconds: 0,
+      seconds: 0
     };
   },
-  mounted () {
+  mounted() {
     this.$options.interval = setInterval(this.updateDateTime, 1000);
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.$options.interval);
   },
   methods: {
     signOut() {
       firebase.auth().signOut();
     },
-    updateDateTime () {
-      let now = new Date()
-      this.hours = now.getHours()
-      this.minutes = (parseInt(now.getMinutes(), 10) >= 10 ? '' : '0') + now.getMinutes()
-      this.seconds = (parseInt(now.getSeconds(), 10) >= 10 ? '' : '0') + now.getSeconds()
-      this.hours = this.hours % 12 || 12
+    updateDateTime() {
+      let now = new Date();
+      this.hours = now.getHours();
+      this.minutes =
+        (parseInt(now.getMinutes(), 10) >= 10 ? "" : "0") + now.getMinutes();
+      this.seconds =
+        (parseInt(now.getSeconds(), 10) >= 10 ? "" : "0") + now.getSeconds();
+      this.hours = this.hours % 12 || 12;
     }
   }
 };
