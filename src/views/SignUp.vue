@@ -69,20 +69,22 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
+        .then(function(data) {
+          nativeToast({
+            message: "Hi " + data.user.displayName || "friend",
+            position: "top",
+            timeout: 3000,
+            type: "success"
+          });
+
+          firebase.auth().currentUser.sendEmailVerification();
+        })
         .catch(error =>
           nativeToast({
             message: error.message,
             position: "top",
             timeout: 3000,
             type: "error"
-          })
-        )
-        .then(data =>
-          nativeToast({
-            message: "Hi " + data.user.displayName || "friend",
-            position: "top",
-            timeout: 3000,
-            type: "success"
           })
         );
     },
@@ -91,20 +93,20 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .catch(error =>
-          nativeToast({
-            message: error.message,
-            position: "top",
-            timeout: 3000,
-            type: "error"
-          })
-        )
         .then(data =>
           nativeToast({
             message: "Hi " + data.user.displayName || "friend",
             position: "top",
             timeout: 3000,
             type: "success"
+          })
+        )
+        .catch(error =>
+          nativeToast({
+            message: error.message,
+            position: "top",
+            timeout: 3000,
+            type: "error"
           })
         );
     }

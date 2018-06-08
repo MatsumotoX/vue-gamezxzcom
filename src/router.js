@@ -10,6 +10,7 @@ import SignIn from "./views/SignIn.vue";
 import SignUp from "./views/SignUp.vue";
 import Dashboard from "./views/Dashboard.vue";
 import Chat from "./views/Chat.vue";
+import ResetPassword from "./views/ResetPassword.vue";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ let router = new Router({
       path: "/sign-up",
       name: "signUp",
       component: SignUp
+    },
+    {
+      path: "/reset-password",
+      name: "resetPassword",
+      component: ResetPassword
     },
     {
       path: "/dashboard",

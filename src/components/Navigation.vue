@@ -42,7 +42,7 @@
             <router-link to="/sign-up">Sign Up</router-link>
           </li>
           <li>
-            <router-link to="/resetpassword">Forgot Password</router-link>
+            <router-link to="/reset-password">Forgot Password</router-link>
           </li>
         </ul>
         <ul class="nav luna-nav">

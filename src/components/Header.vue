@@ -24,10 +24,10 @@
           </div>
           <ul v-if="this.$store.state.authUser" class="nav navbar-nav navbar-right">
             <li class=" profil-link">
-              <a href="#">
+              <router-link to="/dashboard">
                 <span class="profile-address">{{this.$store.state.authUser.displayName}}</span>
-                <img :src="this.$store.state.authUser.photoURL" class="img-circle" alt="">
-              </a>
+                <img :src="this.$store.state.authUser.photoURL || 'https://digitalchamber.org/wp-content/uploads/2018/02/Bitcoin-icon-300x300.png'" class="img-circle" alt="">
+              </router-link>
             </li>
           </ul>
         </div>

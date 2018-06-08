@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.$store.state.authUser">
-    {{ this.$router.push('dashboard')  }}
+    {{ this.$router.push('dashboard') }}
   </div>
   <div v-else>
     <div class="container-center animated slideInDown">
@@ -69,20 +69,20 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .catch(error =>
-          nativeToast({
-            message: error.message,
-            position: "top",
-            timeout: 3000,
-            type: "error"
-          })
-        )
         .then(data =>
           nativeToast({
             message: "Hi " + data.user.displayName || "friend",
             position: "top",
             timeout: 3000,
             type: "success"
+          })
+        )
+        .catch(error =>
+          nativeToast({
+            message: error.message,
+            position: "top",
+            timeout: 3000,
+            type: "error"
           })
         );
     },
@@ -91,20 +91,20 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .catch(error =>
-          nativeToast({
-            message: error.message,
-            position: "top",
-            timeout: 3000,
-            type: "error"
-          })
-        )
         .then(data =>
           nativeToast({
             message: "Hi " + data.user.displayName || "friend",
             position: "top",
             timeout: 3000,
             type: "success"
+          })
+        )
+        .catch(error =>
+          nativeToast({
+            message: error.message,
+            position: "top",
+            timeout: 3000,
+            type: "error"
           })
         );
     }
