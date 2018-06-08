@@ -21,12 +21,12 @@
     <!-- New Message -->
     <form @submit.prevent="storeMessage">
       <div class="form-group">
-        <label>Message:</label>
-        <textarea v-model="messageText" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
         <label>Nickname:</label>
         <input v-model="nickname" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Message:</label>
+        <input v-model="messageText" class="form-control"></input>
       </div>
       <button class="btn btn-primary">Send</button>
     </form>
@@ -60,7 +60,7 @@ export default {
     return {
       messages: [],
       messageText: "",
-      nickname: "",
+      nickname: "anonymous" + Math.floor(Math.random() * 1000),
       time: "",
       member: false,
       editingMessage: null
@@ -88,9 +88,9 @@ export default {
     // value = snapshot.val() | key = snapshot.key
     messagesRef.on("child_added", snapshot => {
       this.messages.push({ ...snapshot.val(), id: snapshot.key });
-      this.nickname = this.$store.state.authUser
-        ? this.$store.state.authUser.displayName
-        : "anonymous" + Math.floor(Math.random() * 1000);
+      if (this.$store.state.authUser) {
+        this.nickname = this.$store.state.authUser.displayName;
+      }
       if (snapshot.val().nickname !== this.nickname) {
         nativeToast({
           message: `New message by ${snapshot.val().nickname}`,
